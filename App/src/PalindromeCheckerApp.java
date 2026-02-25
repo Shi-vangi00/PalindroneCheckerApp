@@ -1,31 +1,27 @@
+import java.util.Stack;
+
 public class PalindromeCheckerApp {
     public static void main(String[] args){
-        String input = "madam";
-
-        // Convert string to character array
-        char[] characters = input.toCharArray();
-
-        // Two-pointer approach
-        int start = 0;
-        int end = characters.length - 1;
+        String input = "racecar";
+        Stack<Character> stack = new Stack<>();
         boolean isPalindrome = true;
 
-        while (start < end) {
-            if (characters[start] != characters[end]) {
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
-
-        // Display result
-        System.out.println("Input String : " + input);
 
         if (isPalindrome) {
-            System.out.println("Result : It is a Palindrome.");
+            System.out.println("'" + input + "' is a palindrome.");
         } else {
-            System.out.println("Result : It is NOT a Palindrome.");
+            System.out.println("'" + input + "' is not a palindrome.");
         }
+
     }
 }
