@@ -1,61 +1,27 @@
 public class PalindromeCheckerApp {
 
-    // Node class
-    static class Node {
-        char data;
-        Node next;
+    // Recursive function
+    public static boolean isPalindrome(String str, int start, int end) {
 
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-    public static boolean isPalindrome(String input) {
-
-        Node head = null, tail = null;
-
-        for (char c : input.toCharArray()) {
-            Node newNode = new Node(c);
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-        Node slow = head, fast = head;
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+        // Base Condition
+        if (start >= end) {
+            return true;
         }
 
-        Node prev = null, current = slow;
-        while (current != null) {
-            Node nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
+        // If characters don't match
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
 
-        Node firstHalf = head;
-        Node secondHalf = prev;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
+        // Recursive Call (move inward)
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
 
-        String input = "deified";
+        String input = "deified";   // Change string here
 
-        boolean result = isPalindrome(input);
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
         System.out.println("Input String : " + input);
         System.out.println("Is Palindrome : " + result);
