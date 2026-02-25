@@ -1,31 +1,30 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class PalindromeCheckerApp {
     public static void main(String[] args){
-        String input = "madam";
+        String input = "radar";
 
-        // Convert string to character array
-        char[] characters = input.toCharArray();
-
-        // Two-pointer approach
-        int start = 0;
-        int end = characters.length - 1;
+        Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
         boolean isPalindrome = true;
 
-        while (start < end) {
-            if (characters[start] != characters[end]) {
+        for (char c : input.toCharArray()) {
+            stack.push(c);   // Adds to the top (LIFO)
+            queue.add(c);    // Adds to the back (FIFO)
+        }
+
+        while (!stack.isEmpty()) {
+            char fromStack = stack.pop();    // Last character first
+            char fromQueue = queue.remove(); // First character first
+
+            if (fromStack != fromQueue) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
-
-        // Display result
-        System.out.println("Input String : " + input);
-
-        if (isPalindrome) {
-            System.out.println("Result : It is a Palindrome.");
-        } else {
-            System.out.println("Result : It is NOT a Palindrome.");
-        }
+        System.out.println("Input: " + input);
+        System.out.println("Is Palindrome: " + isPalindrome);
     }
 }
