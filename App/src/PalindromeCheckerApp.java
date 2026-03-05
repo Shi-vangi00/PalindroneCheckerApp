@@ -1,29 +1,50 @@
-public class PalindromeCheckerApp {
+import java.util.Stack;
 
-    public boolean checkPalindrome(String input) {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+
+class StackStrategy implements PalindromeStrategy {
+
+    public boolean check(String input) {
 
         String normalized = input.toLowerCase().replaceAll("\\s+", "");
 
-        return isPalindrome(normalized, 0, normalized.length() - 1);
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : normalized.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : normalized.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
     }
-    private boolean isPalindrome(String str, int start, int end) {
+}
 
-        if (start >= end) {
-            return true;
-        }
+public class PalindromeCheckerApp {
 
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
+    private PalindromeStrategy strategy;
 
-        return isPalindrome(str, start + 1, end - 1);
+    public PalindromeCheckerApp(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean checkPalindrome(String input) {
+        return strategy.check(input);
     }
 
     public static void main(String[] args) {
 
         String input = "A man a plan a canal Panama";
 
-        PalindromeCheckerApp checker = new PalindromeCheckerApp();
+        PalindromeStrategy strategy = new StackStrategy();
+
+        PalindromeCheckerApp checker = new PalindromeCheckerApp(strategy);
 
         boolean result = checker.checkPalindrome(input);
 
