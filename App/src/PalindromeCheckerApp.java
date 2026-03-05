@@ -3,27 +3,27 @@ public class PalindromeCheckerApp {
     // Recursive function
     public static boolean isPalindrome(String str, int start, int end) {
 
-        // Base Condition
         if (start >= end) {
             return true;
         }
 
-        // If characters don't match
         if (str.charAt(start) != str.charAt(end)) {
             return false;
         }
 
-        // Recursive Call (move inward)
         return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
 
-        String input = "deified";   // Change string here
+        String input = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+
+        boolean result = isPalindrome(normalized, 0, normalized.length() - 1);
 
         System.out.println("Input String : " + input);
+        System.out.println("Processed String : " + normalized);
         System.out.println("Is Palindrome : " + result);
     }
 }
